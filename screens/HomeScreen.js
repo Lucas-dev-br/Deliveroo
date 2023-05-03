@@ -13,7 +13,7 @@ import {
 } from "react-native-heroicons/outline";
 
 // Components
-import Categories from './components/categories'
+import Categories from './components/Categories'
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -25,7 +25,7 @@ const HomeScreen = () => {
   }, []);
 
   return (
-    <SafeAreaView className="mt-11 bg-white pt-1">
+    <SafeAreaView className="mt-8 bg-white pt-1">
       {/* HEADER */}
       <View className="flex-row pb-3 items-center mx-4 space-x-2 px-2">
         <Image
@@ -59,7 +59,7 @@ const HomeScreen = () => {
       </View>
 
       {/* Body */}
-      <ScrollView className='bg-gray-100'
+      <ScrollView className='bg-gray-100 '
       contentContainerStyle={{
         paddingBottom: 100,
       }}>
@@ -67,7 +67,7 @@ const HomeScreen = () => {
           <Categories />
 
         {/* Featueres Rows*/}
-      </ScrollView>
+      </ScrollView> 
 
     </SafeAreaView>
   );
