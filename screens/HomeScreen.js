@@ -14,6 +14,7 @@ import {
 
 // Components
 import Categories from './components/Categories'
+import FeaturedRow from "./components/Featured";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -61,13 +62,32 @@ const HomeScreen = () => {
       {/* Body */}
       <ScrollView className='bg-gray-100 '
       contentContainerStyle={{
-        paddingBottom: 100,
+        // paddingBottom: 100,
       }}>
         {/* Categories */}
           <Categories />
 
         {/* Featueres Rows*/}
       </ScrollView> 
+      {/* Featured */}
+      <FeaturedRow 
+        id="123"      
+        title="featured"
+        description="Peça a os seus companheiros"
+      />
+      {/* Tasty Discounts */}
+      <FeaturedRow 
+        id="124"
+        title="Offerns near you!"
+        description="Peça a os seus companheiros"
+      />
+      {/* Offers near you */}
+      <FeaturedRow 
+        id="1234"     
+        
+        title="Tasty Discounts"
+        description="Peça a os seus companheiros"
+      />
 
     </SafeAreaView>
   );
