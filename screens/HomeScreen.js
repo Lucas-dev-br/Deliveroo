@@ -1,5 +1,12 @@
-import { View, Text, SafeAreaView, Image, TextInput, ScrollView } from "react-native";
-import React, { useLayoutEffect } from "react";
+import {
+  View,
+  Text,
+  SafeAreaView,
+  Image,
+  TextInput,
+  ScrollView,
+} from "react-native";
+import React, { useLayoutEffect, useState, useEffect } from "react";
 
 // Navigation
 import { useNavigation } from "@react-navigation/native";
@@ -13,11 +20,16 @@ import {
 } from "react-native-heroicons/outline";
 
 // Components
-import Categories from './components/Categories'
+import Categories from "./components/categories";
 import FeaturedRow from "./components/Featured";
+
+// Client Sanity
+import client from "../sanity/sanity";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
+
+  const [featuredCategories, setFeaturedCategories] = useState([]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -25,10 +37,27 @@ const HomeScreen = () => {
     });
   }, []);
 
+  useEffect(() => {
+    client
+      .fetch(
+        `
+    *[_type == "featured] { 
+      ...,
+      restaurants[]->{
+        ...,
+        dishes[]->
+      
+    }`
+      )
+      .then((data) => {
+        setFeaturedCategories(data);
+      });
+  }, []);
+
   return (
-    <SafeAreaView className="mt-8 bg-white pt-1">
+    <SafeAreaView className=" bg-white pt-1">
       {/* HEADER */}
-      <View className="flex-row pb-3 items-center mx-4 space-x-2 px-2">
+      <View className="pt-10 flex-row pb-3 items-center mx-4 space-x-2 px-2">
         <Image
           source={{
             uri: "http://links.papareact.com/wru",
@@ -60,35 +89,37 @@ const HomeScreen = () => {
       </View>
 
       {/* Body */}
-      <ScrollView className='bg-gray-100 '
-      contentContainerStyle={{
-        // paddingBottom: 100,
-      }}>
+      <ScrollView
+        className="bg-gray-100 "
+        contentContainerStyle={
+          {
+            // paddingBottom: 100,
+          }
+        }
+      >
         {/* Categories */}
-          <Categories />
+        <Categories />
 
         {/* Featueres Rows*/}
-      </ScrollView> 
+      </ScrollView>
       {/* Featured */}
-      <FeaturedRow 
-        id="123"      
+      <FeaturedRow
+        id="123"
         title="featured"
         description="Peça a os seus companheiros"
       />
       {/* Tasty Discounts */}
-      <FeaturedRow 
+      <FeaturedRow
         id="124"
         title="Offerns near you!"
         description="Peça a os seus companheiros"
       />
       {/* Offers near you */}
-      <FeaturedRow 
-        id="1234"     
-        
+      <FeaturedRow
+        id="1234"
         title="Tasty Discounts"
         description="Peça a os seus companheiros"
       />
-
     </SafeAreaView>
   );
 };
